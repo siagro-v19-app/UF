@@ -1,0 +1,22 @@
+<core:FragmentDefinition
+   xmlns="sap.m"
+   xmlns:core="sap.ui.core">
+   <Dialog
+		id="UFDialog"
+		title="Gravar UF"
+		class="sapUiSmallMargin">
+   	
+   		<VBox id="vBoxUF" class="sapUiSmallMargin">
+   			<Label text="Código:" labelFor="codigo"/>
+			<Input value="{Codigo}" id="codigo" required="true"/>
+			
+			<Label text="Sigla:" labelFor="sigla"/>
+			<Input value="{Sigla}" id="sigla" required="true"/>
+		</VBox>
+   		
+   		<buttons>
+   			<Button text="Salvar" press="onSaveDialog"/>
+   			<Button text="Fechar" press="onCloseDialog"/>
+   		</buttons>
+   </Dialog>
+</core:FragmentDefinition>
