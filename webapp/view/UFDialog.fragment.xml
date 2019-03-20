@@ -3,7 +3,7 @@
    xmlns:core="sap.ui.core">
    <Dialog
 		id="UFDialog"
-		title="Gravar UF"
+		title="{view>/titulo}"
 		class="sapUiSmallMargin">
    	
    		<VBox id="vBoxUF" class="sapUiSmallMargin">

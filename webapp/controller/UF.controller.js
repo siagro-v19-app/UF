@@ -18,6 +18,12 @@ sap.ui.define([
 		onIncluir: function(){
 			var oDialog = this._criarDialog();
 			var oModel = this.getOwnerComponent().getModel();
+			var oViewModel = this.getOwnerComponent().getModel("view");
+			
+			oViewModel.setData({
+				titulo: "Inserir UF",
+				msgSave: "UF inserido com sucesso!"
+			});
 			
 			oDialog.unbindElement();
 			oDialog.setEscapeHandler(function(oPromise){
@@ -42,6 +48,12 @@ sap.ui.define([
 			var oDialog = this._criarDialog();
 			var oTable = this.byId("tableUF");
 			var nIndex = oTable.getSelectedIndex();
+			var oViewModel = this.getOwnerComponent().getModel("view");
+			
+			oViewModel.setData({
+				titulo: "Editar UF",
+				msgSave: "UF alterado com sucesso!"
+			});
 			
 			if(nIndex === -1){
 				MessageBox.information("Selecione um UF da tabela!");
@@ -77,6 +89,7 @@ sap.ui.define([
 		onSaveDialog: function(){
 			var oView = this.getView();
 			var oModel = this.getOwnerComponent().getModel();
+			var oViewModel = this.getOwnerComponent().getModel("view"); 
 			
 			if(this._checarCampos(this.getView()) === true){
 				MessageBox.information("Preencha todos os campos obrigatórios!");
@@ -85,7 +98,7 @@ sap.ui.define([
 				oModel.submitChanges({
 					success: function(){
 						oModel.refresh(true);
-						MessageBox.success("UF inserido com sucesso!");
+						MessageBox.success(oViewModel.getData().msgSave);
 						oView.byId("UFDialog").close();
 						oView.byId("tableUF").clearSelection();
 					},
