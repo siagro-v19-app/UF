@@ -11,8 +11,8 @@ sap.ui.define([
 		
 		onRefresh: function(){
 			var oModel = this.getOwnerComponent().getModel();
-			
 			oModel.refresh(true);
+			this.getView().byId("tableUF").clearSelection();
 		},
 		
 		onIncluir: function(){
@@ -56,7 +56,7 @@ sap.ui.define([
 			});
 			
 			if(nIndex === -1){
-				MessageBox.information("Selecione um UF da tabela!");
+				MessageBox.warning("Selecione um UF da tabela!");
 				return;
 			}
 			
@@ -72,7 +72,7 @@ sap.ui.define([
 			var nIndex = oTable.getSelectedIndex();
 			
 			if(nIndex === -1){
-				MessageBox.information("Selecione um UF da tabela!");
+				MessageBox.warning("Selecione um UF da tabela!");
 				return;
 			}
 			
@@ -92,18 +92,18 @@ sap.ui.define([
 			var oViewModel = this.getOwnerComponent().getModel("view"); 
 			
 			if(this._checarCampos(this.getView()) === true){
-				MessageBox.information("Preencha todos os campos obrigatórios!");
+				MessageBox.warning("Preencha todos os campos obrigatórios!");
 				return;
 			} else{
 				oModel.submitChanges({
-					success: function(){
-						oModel.refresh(true);
-						MessageBox.success(oViewModel.getData().msgSave);
-						oView.byId("UFDialog").close();
-						oView.byId("tableUF").clearSelection();
-					},
-					error: function(oError){
-						MessageBox.error(oError.responseText);
+					success: function(oResponse){
+						var erro = oResponse.__batchResponses[0].response;
+						if(!erro){
+							oModel.refresh(true);
+							MessageBox.success(oViewModel.getData().msgSave);
+							oView.byId("UFDialog").close();
+							oView.byId("tableUF").clearSelection();
+						}
 					}
 				});
 			}
@@ -127,9 +127,6 @@ sap.ui.define([
 				success: function(){
 					oModel.refresh(true);
 					oTable.clearSelection();
-				},
-				error: function(oError){
-					MessageBox.error(oError.responseText);
 				}
 			});
 		},
